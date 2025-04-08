@@ -2,6 +2,7 @@ from flask import Flask, jsonify, render_template, request
 
 app = Flask(__name__)
 
+# data source
 books = [
     {"book_id": "B_001", "title": "Martin Eden", "author": "Jack London", "publication_year ": 1901, "genre": "Adventure",
         "read_status": "read", "rating": 4, "notes": "The story of a man who is trying to escape the world"},
@@ -20,16 +21,26 @@ books = [
 
 @app.route("/")
 def home():
+    """
+    Home page of the app. Renders the index.html file.
+    """
     return render_template("index.html")
 
 
 @app.route("/api/books", methods=["GET"])
 def get_books():
+    """
+    Returns a list of all the books in the library.
+    """
     return jsonify(books)
 
 
 @app.route("/api/books/<string:book_id>", methods=["GET"])
 def get_book(book_id):
+    """
+    Returns the details of a specific book based on its book_id.
+    if the book is not found, returns a 404 error
+    """
     print(f"Data recieved as book_id: {book_id}")
     for book in books:
         if book_id == book.get("book_id"):
@@ -40,7 +51,13 @@ def get_book(book_id):
 
 @app.route("/api/books", methods=["POST"])
 def add_book():
+    """
+    1. Adds a new book to the library.
+    2. Based on the book_id, if the book already exists, returns a 400 error
+    3. Condition to check if all the required fields are present
+    4. For loop to check if the book already exists
 
+    """
     new_book = request.json
 
     if not new_book:
@@ -59,7 +76,11 @@ def add_book():
 
 @app.route("/api/books/<string:book_id>", methods=["PUT"])
 def update_book(book_id):
-    book_update = None
+    """
+    1. Updates the details of a specific book based on its book_id.
+    2. If the book is not found, returns a 400 error
+    """
+    book_update = None  # variable to hold the updated book
     for book in books:
         if book_id == book.get("book_id"):
             book_update = book
@@ -75,6 +96,10 @@ def update_book(book_id):
 
 @app.route("/api/books/<string:book_id>", methods=["DELETE"])
 def delete_book(book_id):
+    """
+    1. Deletes a specific book based on its book_id.
+    2. If the book is not found, returns a 400 error.
+    """
     book_delete = None
     for book in books:
         if book_id == book.get("book_id"):
@@ -82,13 +107,17 @@ def delete_book(book_id):
 
     if book_delete:
         books.remove(book_delete)
-        return jsonify({"success": f"Successfully deleted book with book_id: {book_id}", "books": books})
+        return jsonify({"success": f"Successfully deleted book with book_id: {book_id}.", "books": books})
 
     return jsonify({"error": f"The book with book_id {book_id} not found"}), 400
 
 
 @app.route("/api/books/stats", methods=["GET"])
 def get_stats():
+    """
+    Returns statistics about the books, including total number of books,
+    how many are read, genre counts, and average rating.
+    """
     if len(books) == 0:
         return jsonify({"error": "No books found"}), 400
 
