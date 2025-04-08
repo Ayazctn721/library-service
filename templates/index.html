@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Service</title>
+  </head>
+  <body>
+    <h1>Welcome to Library Service</h1>
+    <ul>
+      <ol>
+        <h3><code>/api/books</code></h3>
+        <a href="/api/books">Get all books</a>
+        <li>Method: <code>GET</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>
+          Returns a list of all the books in the library, including their
+          details.
+        </li>
+      </ol>
+      <ol>
+        <h3><code>/api/books/{book_id}</code></h3>
+        <li>Method: <code>GET</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>Returns the details of a specific book based on its book_id.</li>
+      </ol>
+      <ol>
+        <h3><code>/api/books</code></h3>
+        <li>Method: <code>POST</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>Adds a new book to the library.</li>
+      </ol>
+      <ol>
+        <h3><code>/api/books/{book_id}</code></h3>
+        <li>Method: <code>PUT</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>Updates the details of a specific book based on its book_id.</li>
+      </ol>
+      <ol>
+        <h3><code>/api/books/{book_id}</code></h3>
+        <li>Method: <code>DELETE</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>Deletes a specific book based on its book_id.</li>
+      </ol>
+      <ol>
+        <h3><code>/api/books/stats</code></h3>
+        <a href="/api/books/stats">Get statistics</a>
+        <li>Method: <code>GET</code></li>
+        <li>Returns: <code>JSON</code></li>
+        <li>
+          Returns statistics about the books, including total number of books,
+          how many are read, genre counts, and average rating.
+        </li>
+      </ol>
+    </ul>
+  </body>
+</html>
