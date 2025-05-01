@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, render_template, request
 from controllers.book_controller import book_bp
+from db import close_db
 
 
 def create_app():
@@ -18,6 +19,8 @@ def create_app():
     @app.errorhandler(500)
     def handle_server_error(error):
         return jsonify({"error": "Server error"}), 500
+
+    app.teardown_appcontext(close_db)
 
     return app
 
