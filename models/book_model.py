@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class Book:
-    def __init__(self, book_id, title, author, publication_year, genre, read_status, rating, notes=""):
+    def __init__(self, book_id, title, author, publication_year, genre, read_status, rating, notes="", uuid=None, created_at=None, **kwargs):
         self.book_id = book_id
         self.title = title
         self.author = author
@@ -16,8 +16,8 @@ class Book:
         self.rating = rating
         self.notes = notes
         # we convert to string bc it is not a string initially
-        self.uuid = str(uuid4())
-        self.creared_at = datetime.now()
+        self.uuid = uuid if uuid else str(uuid4())
+        self.created_at = created_at if created_at else datetime.now()
 
     def to_dict(self):
         return {
@@ -30,5 +30,5 @@ class Book:
             "rating": self.rating,
             "notes": self.notes,
             "uuid": self.uuid,
-            "created_at": self.creared_at
+            "created_at": self.created_at
         }

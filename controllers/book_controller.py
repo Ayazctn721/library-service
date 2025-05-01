@@ -54,3 +54,20 @@ def delete_book(book_id):
         "books": [book.to_dict() for book in books]
     }
     return jsonify(responce)
+
+
+@book_bp.route('/books/<string:book_id>', methods=['PUT'])
+def update_book(book_id):
+    data = request.json
+    if not data:
+        return jsonify({"error": "data cannot be empty"}), 400
+
+    updated_book, books = BookService.update_book(book_id, data)
+
+    response = {
+        "success": "Successfully updated book",
+        "updated_book": updated_book.to_dict(),
+        "books": [book.to_dict() for book in books]
+    }
+
+    return jsonify(response)

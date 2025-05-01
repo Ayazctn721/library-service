@@ -1,3 +1,5 @@
+from flask import g, current_app
+import psycopg2
 from models.book_model import Book
 
 book1 = Book(
@@ -22,5 +24,28 @@ book2 = Book(
     notes="The story of the man who sold his ferrari"
 )
 
-
 book_data = [book1, book2]
+
+# connect to PostgreSQL database and  Python can connect to it and can add data, read data, update data, delete data from the database
+
+
+# g is used to store temporary data specific to a request,
+# while current_app provides access to the current Flask application instance, allowing you to interact with the application's configuration and settings.
+
+
+def get_db():
+    if 'db' not in g:
+        g.db = psycopg2.connect(
+            dbname="flask_postgres_db",
+            user="postgres",
+            password="postgres",
+            host="localhost",
+            port="5432"
+        )
+    return g.db
+
+
+def close_db(e=None):
+    db = g.pop('db', None)
+    if db is not None:
+        db.close()
